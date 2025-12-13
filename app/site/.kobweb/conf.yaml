@@ -1,0 +1,14 @@
+site:
+  title: "EmilyEby"
+
+server:
+  files:
+    dev:
+      contentRoot: "build/processedResources/js/main/public"
+      script: "build/kotlin-webpack/js/developmentExecutable/emilyeby.js"
+      api: "build/libs/emilyeby.jar"
+    prod:
+      script: "build/kotlin-webpack/js/productionExecutable/emilyeby.js"
+      siteRoot: ".kobweb/site"
+
+  port: 8080
