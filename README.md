@@ -1,2 +1,0 @@
-# emilyeby
-My portfolio
