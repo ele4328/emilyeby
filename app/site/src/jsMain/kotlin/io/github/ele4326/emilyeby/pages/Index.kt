@@ -1,10 +1,14 @@
 package io.github.ele4326.emilyeby.pages
 
 import androidx.compose.runtime.Composable
+import com.varabyte.kobweb.compose.css.ObjectFit
 import com.varabyte.kobweb.compose.css.StyleVariable
+import com.varabyte.kobweb.compose.css.objectFit
+import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
@@ -27,6 +31,7 @@ import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.ColorPalettes
+import io.github.ele4326.emilyeby.Body3SansSerifTextStyle
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.fr
 import org.jetbrains.compose.web.css.px
@@ -34,14 +39,23 @@ import org.jetbrains.compose.web.css.vh
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 import io.github.ele4326.emilyeby.HeadlineTextStyle
+import io.github.ele4326.emilyeby.Maroon
+import io.github.ele4326.emilyeby.SitePalettes
 import io.github.ele4326.emilyeby.SubheadlineTextStyle
 import io.github.ele4326.emilyeby.components.layouts.PageLayoutData
+import io.github.ele4326.emilyeby.components.widgets.AboutMeButton
 import io.github.ele4326.emilyeby.toSitePalette
+import org.jetbrains.compose.web.css.AlignContent
+import org.jetbrains.compose.web.css.height
+import org.jetbrains.compose.web.css.marginBottom
+import org.jetbrains.compose.web.css.marginTop
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.width
+import org.jetbrains.compose.web.dom.Img
 
 // Container that has a tagline and grid on desktop, and just the tagline on mobile
 val HeroContainerStyle = CssStyle {
-    base { Modifier.fillMaxWidth().gap(2.cssRem) }
-    Breakpoint.MD { Modifier.margin { top(20.vh) } }
+    base { Modifier.fillMaxWidth().alignContent(AlignContent.Center).padding { top(88.px) } }
 }
 
 // A demo grid that appears on the homepage because it looks good
@@ -60,16 +74,6 @@ val HomeGridCellStyle = CssStyle.base {
         .borderRadius(1.cssRem)
 }
 
-@Composable
-private fun GridCell(color: Color, row: Int, column: Int, width: Int? = null, height: Int? = null) {
-    Div(
-        HomeGridCellStyle.toModifier()
-            .setVariable(GridCellColorVar, color)
-            .gridItem(row, column, width, height)
-            .toAttrs()
-    )
-}
-
 
 @InitRoute
 fun initHomePage(ctx: InitRouteContext) {
@@ -80,64 +84,51 @@ fun initHomePage(ctx: InitRouteContext) {
 @Layout(".components.layouts.PageLayout")
 @Composable
 fun HomePage() {
-    Row(HeroContainerStyle.toModifier()) {
+    Row(
+        HeroContainerStyle.toModifier().gap(80.px).fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
         Box {
-            val sitePalette = ColorMode.current.toSitePalette()
 
-            Column(Modifier.gap(2.cssRem)) {
+            Column(Modifier.gap(24.px).fillMaxWidth()) {
                 Div(HeadlineTextStyle.toAttrs()) {
                     SpanText(
-                        "Use this template as your starting point for ", Modifier.color(
-                            when (ColorMode.current) {
-                                ColorMode.LIGHT -> Colors.Black
-                                ColorMode.DARK -> Colors.White
-                            }
-                        )
-                    )
-                    SpanText(
-                        "Kobweb",
-                        Modifier
-                            .color(sitePalette.brand.accent)
-                            // Use a shadow so this light-colored word is more visible in light mode
-                            .textShadow(0.px, 0.px, blurRadius = 0.5.cssRem, color = Colors.Gray)
+                        "Emily Eby", Modifier.color(ColorMode.current.toSitePalette().darkText),
                     )
                 }
+                val aboutMeText = "Designer passionate about making products that people are excited to keep using. I thrive off of collaborative environments where we all brainstorm solutions."
 
-                Div(SubheadlineTextStyle.toAttrs()) {
-                    SpanText("You can read the ")
-                    Link("/about", "About")
-                    SpanText(" page for more information.")
+                Div {
+                    SpanText(aboutMeText, Modifier.color(ColorMode.current.toSitePalette().darkText))
                 }
 
                 val ctx = rememberPageContext()
-                Button(onClick = {
-                    // Change this click handler with your call-to-action behavior
-                    // here. Link to an order page? Open a calendar UI? Play a movie?
-                    // Up to you!
-                    ctx.router.tryRoutingTo("/about")
-                }, colorPalette = ColorPalettes.Blue) {
-                    Text("This could be your CTA")
-                }
+                AboutMeButton { ctx.router.tryRoutingTo("/aboutMe") }
             }
         }
 
         Div(
-            HomeGridStyle
-            .toModifier()
-            .displayIfAtLeast(Breakpoint.MD)
-            .grid {
-                rows { repeat(3) { size(1.fr) } }
-                columns { repeat(5) { size(1.fr) } }
+            attrs = {
+                style { // center horizontally
+                    width(1500.px)         // container width
+                    height(500.px)        // container height
+                }
             }
-            .toAttrs()
         ) {
-            val sitePalette = ColorMode.current.toSitePalette()
-            GridCell(sitePalette.brand.primary, 1, 1, 2, 2)
-            GridCell(ColorPalettes.Monochrome._600, 1, 3)
-            GridCell(ColorPalettes.Monochrome._100, 1, 4, width = 2)
-            GridCell(sitePalette.brand.accent, 2, 3, width = 2)
-            GridCell(ColorPalettes.Monochrome._300, 2, 5)
-            GridCell(ColorPalettes.Monochrome._800, 3, 1, width = 5)
+            Img(
+                src = "/images/profile.png",
+                alt = "Profile picture",
+                attrs = {
+                    style {
+                        width(100.percent)
+                        height(100.percent)
+                        property("clip-path", "ellipse(50% 50% at 50% 50%)")
+                        property("object-position", "center 20%")
+                        objectFit(ObjectFit.Cover)
+                    }
+                }
+            )
         }
     }
 }

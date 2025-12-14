@@ -5,6 +5,7 @@ import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.silk.init.InitSilk
 import com.varabyte.kobweb.silk.init.InitSilkContext
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.silk.theme.colors.ColorPalette
 import com.varabyte.kobweb.silk.theme.colors.palette.background
 import com.varabyte.kobweb.silk.theme.colors.palette.color
 
@@ -13,40 +14,40 @@ import com.varabyte.kobweb.silk.theme.colors.palette.color
  *   but just a little.
  */
 class SitePalette(
-    val nearBackground: Color,
-    val cobweb: Color,
-    val brand: Brand,
+    val darkBackground: Color,
+    val lightBackground: Color,
+    val darkText: Color,
+    val lightText: Color,
+    val buttonColor: Color,
 ) {
-    class Brand(
-        val primary: Color = Color.rgb(0x3C83EF),
-        val accent: Color = Color.rgb(0xF3DB5B),
-    )
+
+}
+
+object Maroon : ColorPalette {
+    override val _50 = Color.rgb(0x800F2F)
+    override val _100 = Color.rgb(0x800F2F)
+    override val _200 = Color.rgb(0x800F2F)
+    override val _300 = Color.rgb(0x800F2F)
+    override val _400 = Color.rgb(0x800F2F)
+    override val _500 = Color.rgb(0x800F2F)
+    override val _600 = Color.rgb(0x800F2F)
+    override val _700 = Color.rgb(0x800F2F)
+    override val _800 = Color.rgb(0x800F2F)
+    override val _900 = Color.rgb(0x800F2F)
 }
 
 object SitePalettes {
-    val light = SitePalette(
-        nearBackground = Color.rgb(0xF4F6FA),
-        cobweb = Colors.LightGray,
-        brand = SitePalette.Brand(
-            primary = Color.rgb(0x3C83EF),
-            accent = Color.rgb(0xFCBA03),
-        )
-    )
-    val dark = SitePalette(
-        nearBackground = Color.rgb(0x13171F),
-        cobweb = Colors.LightGray.inverted(),
-        brand = SitePalette.Brand(
-            primary = Color.rgb(0x3C83EF),
-            accent = Color.rgb(0xF3DB5B),
-        )
+    val primary = SitePalette(
+        darkBackground = Color.rgb(0xFFCCD5),
+        lightBackground = Color.rgb(0xFFF0F3),
+        darkText = Color.rgb(0x260013),
+        lightText = Color.rgb(0xFFF6F6),
+        buttonColor = Color.rgb(0x800F2F),
     )
 }
 
 fun ColorMode.toSitePalette(): SitePalette {
-    return when (this) {
-        ColorMode.LIGHT -> SitePalettes.light
-        ColorMode.DARK -> SitePalettes.dark
-    }
+    return SitePalettes.primary
 }
 
 @InitSilk

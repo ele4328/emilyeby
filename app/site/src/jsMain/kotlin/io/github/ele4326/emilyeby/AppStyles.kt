@@ -32,11 +32,8 @@ fun initSiteStyles(ctx: InitSilkContext) {
 
     ctx.stylesheet.registerStyleBase("body") {
         Modifier
-            .fontFamily(
-                "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-                "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"
-            )
-            .fontSize(18.px)
+            .fontFamily("Poppins", "sans-serif")
+            .fontSize(20.px)
             .lineHeight(1.5)
     }
 
@@ -48,7 +45,8 @@ fun initSiteStyles(ctx: InitSilkContext) {
 
 val HeadlineTextStyle = CssStyle.base {
     Modifier
-        .fontSize(3.cssRem)
+        .fontFamily("Zen Old Mincho")
+        .fontSize(60.px)
         .textAlign(TextAlign.Start)
         .lineHeight(1.2) //1.5x doesn't look as good on very large text
 }
@@ -58,6 +56,13 @@ val SubheadlineTextStyle = CssStyle.base {
         .fontSize(1.cssRem)
         .textAlign(TextAlign.Start)
         .color(colorMode.toPalette().color.toRgb().copyf(alpha = 0.8f))
+}
+
+val Body3SansSerifTextStyle = CssStyle.base {
+    Modifier
+        .fontFamily("Poppins", "sans-serif")
+        .fontSize(16.px)
+        .textAlign(TextAlign.Start)
 }
 
 val CircleButtonVariant = ButtonStyle.addVariantBase {
