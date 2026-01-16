@@ -41,12 +41,14 @@ import org.jetbrains.compose.web.dom.Text
 val FooterStyle = CssStyle.base {
     Modifier
         .backgroundColor(colorMode.toSitePalette().darkBackground)
-        .padding(topBottom = 1.5.cssRem, leftRight = 10.percent)
+        .padding(topBottom = 16.px, leftRight = 10.percent)
+        .fillMaxWidth()
 }
 
 @Composable
 fun Footer(modifier: Modifier = Modifier) {
-    Column(modifier.alignItems(AlignItems.Center) ) {
+    Column(FooterStyle.toModifier().then(modifier)
+        .alignItems(AlignItems.Center) ) {
         SpanText("Connect with Me!", Modifier.color(ColorMode.current.toSitePalette().darkText))
         Row(
             FooterStyle.toModifier().then(modifier),
@@ -57,7 +59,7 @@ fun Footer(modifier: Modifier = Modifier) {
         ) {
             val ctx = rememberPageContext()
             AboutMeButton { ctx.router.tryRoutingTo("/aboutMe") }
-            ResumeButton { ctx.router.tryRoutingTo("/resume") }
+            ResumeButton()
         }
     }
 }

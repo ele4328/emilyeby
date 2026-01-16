@@ -18,11 +18,13 @@ import io.github.ele4326.emilyeby.CircleButtonVariant
 import io.github.ele4326.emilyeby.Maroon
 import io.github.ele4326.emilyeby.UncoloredButtonVariant
 import io.github.ele4326.emilyeby.toSitePalette
+import kotlinx.browser.document
 import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.LineStyle
 import org.jetbrains.compose.web.css.em
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Div
+import org.w3c.dom.HTMLAnchorElement
 
 @Composable
 fun AboutMeButton(onClick: () -> Unit) {
@@ -43,9 +45,14 @@ fun AboutMeButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun ResumeButton(onClick: () -> Unit) {
+fun ResumeButton() {
     Button(
-        onClick = {onClick}, modifier = Modifier
+        onClick = {
+            downloadPdf(
+                url = "/Emily_Eby_Resume.pdf",
+                filename = "Emily_Eby_Resume.pdf"
+            )
+        }, modifier = Modifier
             .border(
                 width = 2.px,
                 style = LineStyle.Solid,
@@ -62,4 +69,37 @@ fun ResumeButton(onClick: () -> Unit) {
             )
         }
     }
+}
+
+@Composable
+fun LearnMoreButton(onClick: () -> Unit) {
+    Button(
+        onClick = {onClick()}, modifier = Modifier
+            .border(
+                width = 2.px,
+                style = LineStyle.Solid,
+                color = ColorMode.current.toSitePalette().buttonColor
+            )
+            .backgroundColor(Color.transparent)
+            .borderRadius(10.px)      // more rounded edges
+            .boxShadow(0.px, 2.px, 8.px, color = ColorMode.current.toSitePalette().darkText)
+    ) {
+        Div(Body3SansSerifTextStyle.toAttrs()) {
+            SpanText(
+                "Learn More",
+                Modifier.color(ColorMode.current.toSitePalette().darkText)
+            )
+        }
+    }
+}
+
+fun downloadPdf(url: String, filename: String) {
+    val anchor = document.createElement("a") as HTMLAnchorElement
+    anchor.href = url
+    anchor.download = filename
+    anchor.style.display = "none"
+
+    document.body?.appendChild(anchor)
+    anchor.click()
+    document.body?.removeChild(anchor)
 }

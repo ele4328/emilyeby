@@ -53,11 +53,17 @@ val HeadlineTextStyle = CssStyle.base {
 
 val SubheadlineTextStyle = CssStyle.base {
     Modifier
-        .fontSize(1.cssRem)
+        .fontFamily("Poppins", "sans-serif")
+        .fontSize(32.px)
         .textAlign(TextAlign.Start)
-        .color(colorMode.toPalette().color.toRgb().copyf(alpha = 0.8f))
 }
 
+val Body2SansSerifTextStyle = CssStyle.base {
+    Modifier
+        .fontFamily("Poppins", "sans-serif")
+        .fontSize(18.px)
+        .textAlign(TextAlign.Start)
+}
 val Body3SansSerifTextStyle = CssStyle.base {
     Modifier
         .fontFamily("Poppins", "sans-serif")

@@ -105,7 +105,7 @@ enum class SideMenuState {
 @Composable
 fun NavHeader() {
     Row(
-        NavHeaderStyle.toModifier().fillMaxWidth(),
+        NavHeaderStyle.toModifier().fillMaxWidth().height(64.px),
         verticalAlignment = Alignment.CenterVertically)
     {
 
@@ -119,8 +119,7 @@ fun NavHeader() {
 
         ) {
             MenuItems()
-            val ctx = rememberPageContext()
-            ResumeButton { ctx.router.tryRoutingTo("/resume") }
+            ResumeButton()
         }
 
         Row(

@@ -28,8 +28,7 @@ import io.github.ele4326.emilyeby.components.sections.NavHeader
 import io.github.ele4326.emilyeby.toSitePalette
 
 val PageContentStyle = CssStyle {
-    base { Modifier.fillMaxSize().padding(leftRight = 2.cssRem, top = 4.cssRem) }
-    Breakpoint.MD { Modifier.maxWidth(70.cssRem) }
+    base { Modifier.fillMaxSize()}
 }
 
 
