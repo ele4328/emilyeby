@@ -1,5 +1,6 @@
 site:
   title: "EmilyEby"
+  basePath: "emilyeby"
 
 server:
   files:
