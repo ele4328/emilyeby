@@ -1,6 +1,7 @@
 site:
   title: "EmilyEby"
   basePath: "emilyeby"
+  staticBasePath: "/emilyeby"
 
 server:
   files:
