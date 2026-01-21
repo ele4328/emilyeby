@@ -27,7 +27,10 @@ import org.jetbrains.compose.web.dom.Div
 import org.w3c.dom.HTMLAnchorElement
 
 @Composable
-fun AboutMeButton(onClick: () -> Unit) {
+fun MainButton(
+    onClick: () -> Unit,
+    buttonText: String = "About Me",
+) {
     Button(onClick = {
         onClick()
     }, colorPalette = Maroon,
@@ -37,7 +40,7 @@ fun AboutMeButton(onClick: () -> Unit) {
     ) {
         Div(Body3SansSerifTextStyle.toAttrs()) {
             SpanText(
-                "About Me",
+                buttonText,
                 Modifier.color(ColorMode.current.toSitePalette().lightText)
             )
         }

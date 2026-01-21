@@ -25,7 +25,7 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.ColorPalettes
 import io.github.ele4326.emilyeby.Body3SansSerifTextStyle
 import io.github.ele4326.emilyeby.Maroon
-import io.github.ele4326.emilyeby.components.widgets.AboutMeButton
+import io.github.ele4326.emilyeby.components.widgets.MainButton
 import io.github.ele4326.emilyeby.components.widgets.ResumeButton
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.percent
@@ -58,7 +58,7 @@ fun Footer(modifier: Modifier = Modifier) {
             )
         ) {
             val ctx = rememberPageContext()
-            AboutMeButton { ctx.router.tryRoutingTo("/aboutMe") }
+            MainButton ({ ctx.router.tryRoutingTo("/aboutMe") })
             ResumeButton()
         }
     }

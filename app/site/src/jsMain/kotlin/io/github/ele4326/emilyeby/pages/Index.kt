@@ -46,7 +46,7 @@ import io.github.ele4326.emilyeby.SitePalettes
 import io.github.ele4326.emilyeby.SubheadlineTextStyle
 import io.github.ele4326.emilyeby.components.layouts.PageLayoutData
 import io.github.ele4326.emilyeby.components.sections.Projects
-import io.github.ele4326.emilyeby.components.widgets.AboutMeButton
+import io.github.ele4326.emilyeby.components.widgets.MainButton
 import io.github.ele4326.emilyeby.toSitePalette
 import org.jetbrains.compose.web.css.AlignContent
 import org.jetbrains.compose.web.css.height
@@ -126,7 +126,7 @@ fun HomePage() {
                             }
 
                             val ctx = rememberPageContext()
-                            AboutMeButton { ctx.router.tryRoutingTo("/aboutMe") }
+                            MainButton({ ctx.router.tryRoutingTo("/aboutMe") })
                         }
                     }
 

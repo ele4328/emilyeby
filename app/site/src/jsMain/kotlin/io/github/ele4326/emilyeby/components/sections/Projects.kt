@@ -34,7 +34,6 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import io.github.ele4326.emilyeby.Body3SansSerifTextStyle
 import io.github.ele4326.emilyeby.HeadlineTextStyle
 import io.github.ele4326.emilyeby.SubheadlineTextStyle
-import io.github.ele4326.emilyeby.components.widgets.AboutMeButton
 import io.github.ele4326.emilyeby.components.widgets.LearnMoreButton
 import io.github.ele4326.emilyeby.toSitePalette
 import org.jetbrains.compose.web.css.AlignContent
