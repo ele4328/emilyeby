@@ -1,6 +1,6 @@
-2026-01-20 21:21:27.467 [main] DEBUG io.ktor.server.Application - Java Home: /opt/homebrew/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents
-2026-01-20 21:21:27.467 [main] DEBUG io.ktor.server.Application - Class Loader: jdk.internal.loader.ClassLoaders$AppClassLoader@42110406: [file:/Users/emilyeby/IdeaProjects/emilyeby/app/site/.kobweb/server/server.jar!/okio/]
-2026-01-20 21:21:27.483 [main] DEBUG io.ktor.server.Application - Failed to load module 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke' by classpath reference, falling back to currently loaded value
+2026-01-22 11:20:58.911 [main] DEBUG io.ktor.server.Application - Java Home: /opt/homebrew/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents
+2026-01-22 11:20:58.911 [main] DEBUG io.ktor.server.Application - Class Loader: jdk.internal.loader.ClassLoaders$AppClassLoader@42110406: [file:/Users/emilyeby/IdeaProjects/emilyeby/app/site/.kobweb/server/server.jar!/okio/]
+2026-01-22 11:20:58.924 [main] DEBUG io.ktor.server.Application - Failed to load module 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke' by classpath reference, falling back to currently loaded value
 io.ktor.server.engine.internal.ReloadingException: Module function cannot be found for the fully qualified name 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke'
 	at io.ktor.server.engine.internal.CallableUtilsKt.executeModuleFunction(CallableUtils.kt:68)
 	at io.ktor.server.engine.EmbeddedServer$launchModuleByName$2.invokeSuspend(EmbeddedServerJvm.kt:443)
@@ -46,18 +46,18 @@ io.ktor.server.engine.internal.ReloadingException: Module function cannot be fou
 	at kotlin.coroutines.ContinuationKt.startCoroutine(Continuation.kt:115)
 	at kotlin.coroutines.jvm.internal.RunSuspendKt.runSuspend(RunSuspend.kt:19)
 	at com.varabyte.kobweb.server.ApplicationKt.main(Application.kt)
-2026-01-20 21:21:27.484 [main] INFO  io.ktor.server.Application - Initializing server engine for Kobweb project "EmilyEby"
-2026-01-20 21:21:27.486 [main] WARN  io.ktor.server.Application - API jar specified but does not exist! Please fix conf.yaml, updating the path (or removing the value if you aren't declaring API endpoints). Invalid path: "build/libs/emilyeby.jar"
-2026-01-20 21:21:27.521 [main] INFO  io.ktor.server.Application - CORS: No hosts registered.
-2026-01-20 21:21:27.530 [main] INFO  io.ktor.server.Application - Application started in 0.15 seconds.
-2026-01-20 21:21:27.583 [main] INFO  io.ktor.server.Application - Responding at http://0.0.0.0:8080
-2026-01-20 21:21:43.335 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/climateInMotion"
-2026-01-20 21:21:43.881 [eventLoopGroupProxy-4-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/projects"
-2026-01-20 21:21:44.334 [eventLoopGroupProxy-4-7] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/trustResearch"
-2026-01-20 21:21:44.787 [eventLoopGroupProxy-4-4] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/inTheBuzz"
-2026-01-20 21:21:45.246 [eventLoopGroupProxy-4-2] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/"
-2026-01-20 21:21:45.703 [DefaultDispatcher-worker-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/aboutMe"
-2026-01-20 21:21:46.114 [eventLoopGroupProxy-4-8] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/duolingo"
-2026-01-20 21:21:46.569 [eventLoopGroupProxy-4-6] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/about"
-2026-01-20 21:21:47.662 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Kobweb server shutting down...
-2026-01-20 21:21:48.707 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Server finished shutting down.
+2026-01-22 11:20:58.924 [main] INFO  io.ktor.server.Application - Initializing server engine for Kobweb project "EmilyEby"
+2026-01-22 11:20:58.926 [main] WARN  io.ktor.server.Application - API jar specified but does not exist! Please fix conf.yaml, updating the path (or removing the value if you aren't declaring API endpoints). Invalid path: "build/libs/emilyeby.jar"
+2026-01-22 11:20:58.954 [main] INFO  io.ktor.server.Application - CORS: No hosts registered.
+2026-01-22 11:20:58.966 [main] INFO  io.ktor.server.Application - Application started in 0.129 seconds.
+2026-01-22 11:20:59.016 [main] INFO  io.ktor.server.Application - Responding at http://0.0.0.0:8080
+2026-01-22 11:21:17.152 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/climateInMotion"
+2026-01-22 11:21:17.694 [eventLoopGroupProxy-4-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/projects"
+2026-01-22 11:21:18.163 [eventLoopGroupProxy-4-7] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/trustResearch"
+2026-01-22 11:21:18.619 [eventLoopGroupProxy-4-4] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/inTheBuzz"
+2026-01-22 11:21:19.054 [DefaultDispatcher-worker-6] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/"
+2026-01-22 11:21:19.521 [eventLoopGroupProxy-4-7] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/aboutMe"
+2026-01-22 11:21:19.965 [eventLoopGroupProxy-4-8] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/duolingo"
+2026-01-22 11:21:20.417 [eventLoopGroupProxy-4-5] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/about"
+2026-01-22 11:21:21.826 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Kobweb server shutting down...
+2026-01-22 11:21:22.879 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Server finished shutting down.
