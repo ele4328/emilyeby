@@ -12,6 +12,7 @@ import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.rememberPageContext
+import com.varabyte.kobweb.framework.annotations.DelicateApi
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.components.icons.CloseIcon
@@ -31,10 +32,12 @@ import com.varabyte.kobweb.silk.style.animation.Keyframes
 import com.varabyte.kobweb.silk.style.animation.toAnimation
 import com.varabyte.kobweb.silk.style.base
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint.MD
 import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.style.breakpoint.displayUntil
 import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import io.github.ele4326.emilyeby.Body3SansSerifTextStyle
 import org.jetbrains.compose.web.css.*
@@ -57,24 +60,30 @@ private fun NavLink(path: String, text: String) {
     )
 }
 
+@OptIn(DelicateApi::class)
 @Composable
 private fun MenuItems() {
+    val breakpoint = rememberBreakpoint()
     NavLink("/", "Home")
     NavLink("/aboutMe", "About Me")
     NavLink("/projects", "Projects")
+
+    if (breakpoint <= Breakpoint.SM) {
+        LinkText("", "/Emily_Eby_Resume.pdf", "Resume")
+    }
 }
 
 @Composable
 private fun HamburgerButton(onClick: () -> Unit) {
     IconButton(onClick) {
-        HamburgerIcon()
+        HamburgerIcon(modifier = Modifier.color(ColorMode.current.toSitePalette().darkText))
     }
 }
 
 @Composable
 private fun CloseButton(onClick: () -> Unit) {
     IconButton(onClick) {
-        CloseIcon()
+        CloseIcon(modifier = Modifier.color(ColorMode.current.toSitePalette().darkText))
     }
 }
 
@@ -111,7 +120,7 @@ fun NavHeader() {
 
         Row(
             Modifier.gap(2.cssRem)
-                .displayIfAtLeast(Breakpoint.MD)
+                .displayIfAtLeast(MD)
                 .fillMaxWidth()
                 .backgroundColor(ColorMode.current.toSitePalette().darkBackground),
             verticalAlignment = Alignment.CenterVertically,
@@ -126,7 +135,7 @@ fun NavHeader() {
             Modifier
                 .fontSize(1.5.cssRem)
                 .gap(1.cssRem)
-                .displayUntil(Breakpoint.MD),
+                .displayUntil(MD),
             verticalAlignment = Alignment.CenterVertically
         ) {
             var menuState by remember { mutableStateOf(SideMenuState.CLOSED) }

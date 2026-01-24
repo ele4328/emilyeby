@@ -1,6 +1,8 @@
 package io.github.ele4326.emilyeby.pages
 
 import androidx.compose.runtime.*
+import com.varabyte.kobweb.compose.css.ObjectFit
+import com.varabyte.kobweb.compose.css.objectFit
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
@@ -25,7 +27,9 @@ import io.github.ele4326.emilyeby.components.sections.summaryAndInitialImage
 import io.github.ele4326.emilyeby.toSitePalette
 import org.jetbrains.compose.web.css.AlignContent
 import org.jetbrains.compose.web.css.borderRadius
+import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.Img
 
 @Page("/trustResearch")
@@ -76,6 +80,8 @@ fun TrustResearchPage() {
                         attrs = {
                             style {
                                 borderRadius(20.px)
+                                width(100.percent)
+                                objectFit(ObjectFit.Cover)
                             }
                         }
                     )

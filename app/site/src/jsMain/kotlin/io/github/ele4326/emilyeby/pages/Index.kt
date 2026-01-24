@@ -1,9 +1,13 @@
 package io.github.ele4326.emilyeby.pages
 
 import androidx.compose.runtime.Composable
+import com.varabyte.kobweb.compose.css.AspectRatio
 import com.varabyte.kobweb.compose.css.ObjectFit
 import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.css.VerticalAlign
+import com.varabyte.kobweb.compose.css.Width
+import com.varabyte.kobweb.compose.css.aspectRatio
+import com.varabyte.kobweb.compose.css.functions.min
 import com.varabyte.kobweb.compose.css.objectFit
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -22,6 +26,7 @@ import com.varabyte.kobweb.core.init.InitRoute
 import com.varabyte.kobweb.core.init.InitRouteContext
 import com.varabyte.kobweb.core.layout.Layout
 import com.varabyte.kobweb.core.rememberPageContext
+import com.varabyte.kobweb.framework.annotations.DelicateApi
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.text.SpanText
@@ -31,6 +36,7 @@ import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.ColorPalettes
 import io.github.ele4326.emilyeby.Body3SansSerifTextStyle
@@ -49,10 +55,17 @@ import io.github.ele4326.emilyeby.components.sections.Projects
 import io.github.ele4326.emilyeby.components.widgets.MainButton
 import io.github.ele4326.emilyeby.toSitePalette
 import org.jetbrains.compose.web.css.AlignContent
+import org.jetbrains.compose.web.css.CSSNumeric
+import org.jetbrains.compose.web.css.DisplayStyle
+import org.jetbrains.compose.web.css.display
 import org.jetbrains.compose.web.css.height
+import org.jetbrains.compose.web.css.keywords.auto
 import org.jetbrains.compose.web.css.marginBottom
+import org.jetbrains.compose.web.css.marginLeft
+import org.jetbrains.compose.web.css.marginRight
 import org.jetbrains.compose.web.css.marginTop
 import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.vw
 import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.Img
 
@@ -83,6 +96,7 @@ fun initHomePage(ctx: InitRouteContext) {
     ctx.data.add(PageLayoutData("Home"))
 }
 
+@OptIn(DelicateApi::class)
 @Page
 @Layout(".components.layouts.PageLayout")
 @Composable
@@ -94,6 +108,7 @@ fun HomePage() {
             }
         }
     ) {
+        val breakpoint = rememberBreakpoint()
         Column(Modifier.fillMaxSize()) {
             Box(
                 Modifier
@@ -101,18 +116,22 @@ fun HomePage() {
                     .styleModifier { property("height", "calc(100vh - 64px)") },
                 contentAlignment = Alignment.Center
             ) {
+                val horizontalPadding = if (breakpoint <= Breakpoint.MD) 5.vw else 20.vw
                 Row(
                     HeroContainerStyle
                         .toModifier()
                         .gap(80.px)
                         .fillMaxWidth()
-                        .padding(leftRight = 25.cssRem),
+                        .padding(leftRight = horizontalPadding),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Box {
 
                         Column(Modifier.gap(24.px).fillMaxWidth()) {
+                            if (breakpoint < Breakpoint.MD) {
+                                ProfilePicture(35.vw)
+                            }
                             Div(HeadlineTextStyle.toAttrs()) {
                                 SpanText(
                                     "Emily Eby", Modifier.color(ColorMode.current.toSitePalette().darkText),
@@ -129,32 +148,35 @@ fun HomePage() {
                             MainButton({ ctx.router.tryRoutingTo("/aboutMe") })
                         }
                     }
-
-                    Div(
-                        attrs = {
-                            style { // center horizontally
-                                width(1500.px)         // container width
-                                height(500.px)        // container height
-                            }
-                        }
-                    ) {
-                        Img(
-                            src = "/images/profile.png",
-                            alt = "Profile picture",
-                            attrs = {
-                                style {
-                                    width(100.percent)
-                                    height(100.percent)
-                                    property("clip-path", "ellipse(50% 50% at 50% 50%)")
-                                    property("object-position", "center 20%")
-                                    objectFit(ObjectFit.Cover)
-                                }
-                            }
-                        )
+                    if (breakpoint >= Breakpoint.MD) {
+                        ProfilePicture()
                     }
                 }
             }
             Projects()
         }
     }
+}
+
+@Composable
+fun ProfilePicture(
+    width: CSSNumeric = 25.vw
+) {
+    Img(
+        src = "/images/profile.png",
+        alt = "Profile picture",
+        attrs = {
+            style {
+                width(width)                    // responsive width
+                aspectRatio(AspectRatio.of(1f))    // equal → square
+                property("border-radius", "50%")  // perfect circle
+                objectFit(ObjectFit.Cover)        // cover without stretching
+                property("object-position", "center")
+                display(DisplayStyle.Block)       // center horizontally
+                property("margin-left", "auto")
+                property("margin-right", "auto")
+                property("object-position", "center 20%")
+            }
+        }
+    )
 }

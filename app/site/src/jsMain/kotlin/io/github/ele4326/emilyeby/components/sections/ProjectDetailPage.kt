@@ -1,7 +1,9 @@
 package io.github.ele4326.emilyeby.components.sections
 
 import androidx.compose.runtime.Composable
+import com.varabyte.kobweb.compose.css.ObjectFit
 import com.varabyte.kobweb.compose.css.TextAlign
+import com.varabyte.kobweb.compose.css.objectFit
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -19,8 +21,11 @@ import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.textAlign
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.rememberPageContext
+import com.varabyte.kobweb.framework.annotations.DelicateApi
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import io.github.ele4326.emilyeby.Header3SansSerifTextStyle
 import io.github.ele4326.emilyeby.Header4SansSerifTextStyle
@@ -33,8 +38,11 @@ import org.jetbrains.compose.web.css.DisplayStyle
 import org.jetbrains.compose.web.css.JustifyContent
 import org.jetbrains.compose.web.css.borderRadius
 import org.jetbrains.compose.web.css.color
+import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.textDecoration
+import org.jetbrains.compose.web.css.vh
+import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Img
@@ -110,6 +118,7 @@ fun summaryAndInitialImage(
     }
 }
 
+@OptIn(DelicateApi::class)
 @Composable
 fun subSection(
     title: String,
@@ -121,6 +130,7 @@ fun subSection(
     //this is a list corresponding to the index of where the image will go
     //for example if the list is [0,3] the image are placed after the first and fourth text items
 ) {
+    val breakpoint = rememberBreakpoint()
     Div(
         attrs = Modifier
             .fillMaxWidth()
@@ -136,30 +146,19 @@ fun subSection(
             SpanText(text[i], Modifier.color(ColorMode.current.toSitePalette().darkText))
         }
         if (i in imgIndex) {
-            Row(modifier = Modifier.gap(16.px).fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                Box(contentAlignment = Alignment.Center) {
-                    Img(
-                        src = img[i][0],
-                        alt = img[i][1],
-                        attrs = {
-                            style {
-                                borderRadius(20.px)
-                            }
-                        }
-                    )
+            if (breakpoint > Breakpoint.MD) {
+                Row(
+                    modifier = Modifier.gap(16.px).fillMaxWidth().padding(5.vh),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    ImageSetup(img, i)
                 }
-                if (img[i].size > 2) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Img(
-                            src = img[i][2],
-                            alt = img[i][3],
-                            attrs = {
-                                style {
-                                    borderRadius(20.px)
-                                }
-                            }
-                        )
-                    }
+            } else {
+                Column(
+                    modifier = Modifier.gap(16.px).fillMaxWidth().padding(5.vh),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    ImageSetup(img, i)
                 }
             }
         }
@@ -186,6 +185,41 @@ fun LinkText(
             }
         ) {
             SpanText(linkText)
+        }
+    }
+}
+
+@Composable
+fun ImageSetup(
+    img: List<List<String>> = emptyList(),
+    i: Int
+){
+    Box(contentAlignment = Alignment.Center) {
+        Img(
+            src = img[i][0],
+            alt = img[i][1],
+            attrs = {
+                style {
+                    borderRadius(20.px)
+                    width(100.percent)
+                    objectFit(ObjectFit.Cover)
+                }
+            }
+        )
+    }
+    if (img[i].size > 2) {
+        Box(contentAlignment = Alignment.Center) {
+            Img(
+                src = img[i][2],
+                alt = img[i][3],
+                attrs = {
+                    style {
+                        borderRadius(20.px)
+                        width(100.percent)
+                        objectFit(ObjectFit.Cover)
+                    }
+                }
+            )
         }
     }
 }
