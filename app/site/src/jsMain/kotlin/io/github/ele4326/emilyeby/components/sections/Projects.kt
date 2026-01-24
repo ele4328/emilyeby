@@ -28,8 +28,11 @@ import com.varabyte.kobweb.compose.ui.modifiers.verticalAlign
 import com.varabyte.kobweb.compose.ui.modifiers.width
 import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.core.rememberPageContext
+import com.varabyte.kobweb.framework.annotations.DelicateApi
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toAttrs
+import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import io.github.ele4326.emilyeby.Body3SansSerifTextStyle
 import io.github.ele4326.emilyeby.HeadlineTextStyle
@@ -45,6 +48,7 @@ import org.jetbrains.compose.web.css.height
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.vh
+import org.jetbrains.compose.web.css.vw
 import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Img
@@ -57,7 +61,7 @@ fun Projects(
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth().padding(leftRight = 5.vw),
         contentAlignment = Alignment.Center
     ) {
         Column(modifier = modifier
@@ -81,6 +85,7 @@ fun Projects(
     }
 }
 
+@OptIn(DelicateApi::class)
 @Composable
 fun ProjectItemLeft(
     modifier: Modifier = Modifier.fillMaxWidth().backgroundColor(ColorMode.current.toSitePalette().lightBackground),
@@ -89,20 +94,37 @@ fun ProjectItemLeft(
     image: String = "",
     path: String = "",
 ) {
-    Row(modifier.gap(48.px), horizontalArrangement = Arrangement.Center) {
-        if (image.isNotEmpty()) {
-            ExampleImage(title = title, image = image)
+    val breakpoint = rememberBreakpoint()
+    if (breakpoint > Breakpoint.SM) {
+        Row(modifier.gap(48.px), horizontalArrangement = Arrangement.Center) {
+            if (image.isNotEmpty()) {
+                ExampleImage(title = title, image = image)
+            }
+            ProjectDescription(
+                modifier = modifier,
+                title = title,
+                description = description,
+                path = path,
+                horizontalAlign = Alignment.Start
+            )
         }
-        ProjectDescription(
-            modifier = modifier,
-            title = title,
-            description = description,
-            path = path,
-            horizontalAlign = Alignment.Start
-        )
+    } else {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            if (image.isNotEmpty()) {
+                ExampleImage(title = title, image = image)
+            }
+            ProjectDescription(
+                modifier = modifier,
+                title = title,
+                description = description,
+                path = path,
+                horizontalAlign = Alignment.CenterHorizontally
+            )
+        }
     }
 }
 
+@OptIn(DelicateApi::class)
 @Composable
 fun ProjectItemRight(
     modifier: Modifier = Modifier.fillMaxWidth().backgroundColor(ColorMode.current.toSitePalette().lightBackground),
@@ -111,16 +133,32 @@ fun ProjectItemRight(
     image: String = "",
     path: String = "",
 ) {
-    Row(modifier.gap(48.px), horizontalArrangement = Arrangement.Center) {
-        ProjectDescription(
-            modifier = modifier,
-            title = title,
-            description = description,
-            path = path,
-            horizontalAlign = Alignment.End
-        )
-        if (image.isNotEmpty()) {
-            ExampleImage(title = title, image = image, width = 400.px)
+    val breakpoint = rememberBreakpoint()
+    if (breakpoint > Breakpoint.SM) {
+        Row(modifier.gap(48.px), horizontalArrangement = Arrangement.Center) {
+            ProjectDescription(
+                modifier = modifier,
+                title = title,
+                description = description,
+                path = path,
+                horizontalAlign = Alignment.End
+            )
+            if (image.isNotEmpty()) {
+                ExampleImage(title = title, image = image, width = 400.px)
+            }
+        }
+    }else {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            if (image.isNotEmpty()) {
+                ExampleImage(title = title, image = image, width = 400.px)
+            }
+            ProjectDescription(
+                modifier = modifier,
+                title = title,
+                description = description,
+                path = path,
+                horizontalAlign = Alignment.CenterHorizontally
+            )
         }
     }
 }
@@ -145,6 +183,7 @@ fun ExampleImage(
     )
 }
 
+@OptIn(DelicateApi::class)
 @Composable
 fun ProjectDescription(
     modifier: Modifier = Modifier.fillMaxWidth().backgroundColor(ColorMode.current.toSitePalette().lightBackground),
@@ -153,6 +192,7 @@ fun ProjectDescription(
     path: String = "",
     horizontalAlign: Alignment.Horizontal = Alignment.Start
 ) {
+    val breakpoint = rememberBreakpoint()
     Column(modifier =
         modifier.gap(10.px).width(700.px).padding(all = 32.px),
         verticalArrangement = Arrangement.Center,
@@ -169,14 +209,16 @@ fun ProjectDescription(
         } else {
             TextAlign.End
         }
-        Div(Body3SansSerifTextStyle.toAttrs()) {
-            SpanText(
-                description,
-                Modifier
-                    .color(ColorMode.current.toSitePalette().darkText)
-                    .display(DisplayStyle.Block)
-                    .textAlign(textAlign)
-            )
+        if (breakpoint > Breakpoint.SM) {
+            Div(Body3SansSerifTextStyle.toAttrs()) {
+                SpanText(
+                    description,
+                    Modifier
+                        .color(ColorMode.current.toSitePalette().darkText)
+                        .display(DisplayStyle.Block)
+                        .textAlign(textAlign)
+                )
+            }
         }
         val ctx = rememberPageContext()
         LearnMoreButton { ctx.router.tryRoutingTo(path)  }
