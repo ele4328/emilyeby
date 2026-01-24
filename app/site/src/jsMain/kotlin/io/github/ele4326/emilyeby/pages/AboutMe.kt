@@ -24,9 +24,12 @@ import com.varabyte.kobweb.core.layout.Layout
 import com.varabyte.kobweb.core.layout.NoLayout
 import com.varabyte.kobweb.core.init.InitRoute
 import com.varabyte.kobweb.core.init.InitRouteContext
+import com.varabyte.kobweb.framework.annotations.DelicateApi
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobwebx.frontmatter.*
 import com.varabyte.kobwebx.markdown.*
@@ -40,10 +43,12 @@ import org.jetbrains.compose.web.css.height
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.vh
+import org.jetbrains.compose.web.css.vw
 import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Img
 
+@OptIn(DelicateApi::class)
 @Page("/aboutMe")
 @Composable
 fun AboutMePage() {
@@ -54,16 +59,31 @@ fun AboutMePage() {
             .backgroundColor(ColorMode.current.toSitePalette().darkBackground)
             .height(100.vh)
     ) {
+        val breakpoint = rememberBreakpoint()
+        val horizontalPadding = if (breakpoint <= Breakpoint.SM) 3.vw else 15.vw
         NavHeader()
         Column(modifier =
             Modifier
                 .fillMaxWidth()
                 .backgroundColor(ColorMode.current.toSitePalette().lightBackground)
-                .padding(topBottom = 64.px, leftRight = 92.px)
+                .padding(topBottom = 64.px, leftRight = horizontalPadding)
                 .gap(16.px)
                 .weight(1f)
-                .alignContent(AlignContent.Center)
+                .alignContent(AlignContent.Center),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (breakpoint <= Breakpoint.LG) {
+                Img(
+                    src = "/images/meImage.png",
+                    alt = "Profile picture",
+                    attrs = {
+                        style {
+                            width(25.percent)
+                            objectFit(ObjectFit.Cover)
+                        }
+                    }
+                )
+            }
             Row(modifier = Modifier.fillMaxWidth().gap(32.px)) {
                 Column(modifier = Modifier.fillMaxWidth().padding(leftRight = 64.px).gap(16.px).align(Alignment.Bottom)) {
                     Div(
@@ -90,16 +110,18 @@ fun AboutMePage() {
                         SpanText(aboutMeText2, Modifier.color(ColorMode.current.toSitePalette().darkText))
                     }
                 }
-                Img(
-                    src = "/images/meImage.png",
-                    alt = "Profile picture",
-                    attrs = {
-                        style {
-                            width(23.percent)
-                            objectFit(ObjectFit.Cover)
+                if (breakpoint > Breakpoint.LG) {
+                    Img(
+                        src = "/images/meImage.png",
+                        alt = "Profile picture",
+                        attrs = {
+                            style {
+                                width(30.percent)
+                                objectFit(ObjectFit.Cover)
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
             Column(
                 modifier = Modifier
